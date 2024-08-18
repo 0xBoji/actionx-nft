@@ -1,5 +1,5 @@
 export const collectionName = "Aptos NFT Studio"; // Case sensitive!
-export const MaxMint = 3;
+export const MaxMint = 1;
 export const COLLECTION_SIZE = 100;
 
 // To remove the background of the dapp to a solid color just delete the "collectionCoverUrl" url below
