@@ -11,7 +11,7 @@ export const collectionBackgroundUrl =
 export const mode = "dev"; // "dev" or "test" or "mainnet"
 export let NODE_URL;
 export const CONTRACT_ADDRESS =
-  "b0b5ebcbc3cb07f5afe6bbb64892ef1241c2b33a309ee82912d9844402ceef3e";
+  "de1f5865d7cb37ea6055a8a560c803604b6717bacd9a8e97013dcc359d1ac36c";
 let FAUCET_URL;
 
 if (mode == "dev") {
