@@ -1,14 +1,7 @@
-## Aptos NFT Studio - Aptos NFT Dapp Mintsite
+## ActionX collection minter
 
 This repo contains the Nextjs web application that is linked to an Aptos NFT collection for minting.
 
-Video Tutorial: [https://www.youtube.com/watch?v=h1HUgilNuSE](https://www.youtube.com/watch?v=h1HUgilNuSE)
-
-NFT Sample JSON Files: [https://github.com/aptos-nft-studio/NFT-Sample-JSON-Files](https://github.com/aptos-nft-studio/NFT-Sample-JSON-Files)
-
-Aptos NFT Dapp: [https://github.com/aptos-nft-studio/Aptos-NFT-Dapp](https://github.com/aptos-nft-studio/Aptos-NFT-Dapp)
-
-Aptos Move NFT Contract: [https://github.com/aptos-nft-studio/Aptos-Move-NFT-Contract](https://github.com/aptos-nft-studio/Aptos-Move-NFT-Contract)
 
 
 ### Getting Set Up
@@ -27,10 +20,10 @@ Clone this repo
 
 Step 2)
 
-Make sure you are located in /Aptos-NFT-Dapp and use npm to install dependencies (IMPORTANT - not yarn) 
+Make sure you are located in /actionx-nft and use npm to install dependencies (IMPORTANT - not yarn) 
 
 ```bash
-cd Aptos-NFT-Dapp
+cd actionx-nft
 npm install
 ```
 
