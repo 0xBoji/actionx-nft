@@ -1,4 +1,4 @@
-export const collectionName = "Aptos NFT Studio"; // Case sensitive!
+export const collectionName = "ActionX Collection"; // Case sensitive!
 export const MaxMint = 1;
 export const COLLECTION_SIZE = 100;
 
