@@ -23,6 +23,8 @@ const autoCmRefresh = 10000;
 
 export default function Home() {
   const wallet = useWallet();
+  const [voting, setVoting] = useState(false);
+  const [canVote, setCanVote] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [minting, setMinting] = useState(false)
   const [currentSupply,setCurrentSupply] = useState();
@@ -76,6 +78,40 @@ export default function Home() {
   }
 
   const account_address = wallet.account?.address?.toString();
+
+  const vote = async () => {
+    if (!wallet.account?.address) {
+      toast.error("Please connect your wallet");
+      return;
+    }
+
+    try {
+      setVoting(true);
+      const txHash = await wallet.signAndSubmitTransaction({
+        sender: wallet.account.address,
+        data: {
+          function: `${CONTRACT_ADDRESS}::voting::vote`,
+          typeArguments: [],
+          functionArguments: [true], // Assuming 'true' for a positive vote
+        },    
+      });
+      console.log("txHash ::", txHash.hash); 
+      setVoting(false);
+      toast.success(
+        <div>
+          <strong>Vote Submitted Successfully!</strong>
+          <a href={`https://explorer.aptoslabs.com/txn/${txHash.hash}?network=${NETWORK_STR}`} target="_blank" rel="noopener noreferrer">
+            <p>View Transaction</p>
+          </a>
+        </div>
+      );
+    } catch (err) {
+      console.error(err);
+      setVoting(false);
+      toast.error("Error submitting vote: " + err.message);
+    }
+  }
+
 
   const mint = async () => {
     console.log("account_address ::"+account_address);
@@ -224,54 +260,21 @@ function convertMsToTime(timestamp) {
           className={styles.bg_filter}
         ></div>
         <main className={styles.main}>
-          <h1 className={styles.title}>
-            {collectionName}
-          </h1>
-          <div className={styles.topcorner}>
-            <ConnectWalletButton connectButton={!wallet.connected} className="d-flex" />
+        <h1 className={styles.title}>
+          Voting ActionX
+        </h1>
+        <div className={styles.topcorner}>
+          <ConnectWalletButton connectButton={!wallet.connected} className="d-flex" />
+        </div>
+        
+        <div id="voting-info" className="d-flex flex-column align-items-center text-white" style={{width: "80%"}}>
+          <div className="d-flex align-items-center my-3">
+            <button className={styles.button} onClick={vote}>
+              {voting ? <Spinner animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : "Vote"}
+            </button>
           </div>
-          <img src={collectionCoverUrl} className={styles.mintimage} />
-         
-         <div id="collection-info" className="d-flex flex-column align-items-center text-white" style={{width: "80%"}}>
-          <QuantityToggle onChange={handleQuantityChange} />
-          
-         {(isWhitelistOnly && isWhitelist) || !isWhitelist ? <div className="d-flex align-items-center my-3">
-          
-                <button className={styles.button} onClick={mint} disabled={!canMint}>{minting ? <Spinner animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : "Mint"}</button>
-
-              </div> : <br/>}
-
-            <div className={styles.mintstats}>
-
-            {(isWhitelistOnly && isWhitelist) || !isWhitelist ?
-            <div className={styles.spacebetween}>
-                <h6>Mint fee: </h6>
-                <h6 id="mintfee">{mintFee / 100000000} APT</h6>
-              </div> : ''}
-
-              <div className={styles.spacebetween}>
-                <h6>Current Supply: </h6>
-                <h6>{currentSupply? currentSupply : '0'}</h6>
-              </div>
-
-              <div className={styles.spacebetween}>
-                <h6>Maximum Supply: </h6>
-                <h6>{maxSupply}</h6>
-              </div>
-
-              <div className={styles.spacebetween}>
-                <h6>Mint Deadline: </h6>
-                <h6>{convertMsToTime(expireTime)}</h6>
-              </div>
-
-            </div>
-            <div className={`${styles.notification} ${notificationActive ? styles.visible : styles.hidden}`}>
-                <h6 className={styles.notificationtext}>Please connect your wallet at the top right of the page</h6>
-            </div>  
- 
-          </div> 
-
-        </main>
+        </div> 
+      </main>
 
       </div>
       <ToastContainer />
